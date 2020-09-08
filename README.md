@@ -19,8 +19,8 @@ and this is the way all other client messages look.
 # Server Response Format
 For all the movement commands and "quit", the servers response is to echo that command, but in uppercase. Eg., 
 In respons to a "collisions" request, the server's response is the usual T<length><response string>. The response string is either
-  "collisions: 0",
-or if there is a collision, (I've removed the extra linefeeds below):
+  "COLLISIONS: 0",
+or if there is a collision, (I've removed the extra linefeeds):
 "CONTACTS: , tableClone (UnityEngine.GameObject), 4
 (0.2, 0.4, 0.4)
 (-0.2, 0.4, 0.4)
@@ -28,8 +28,6 @@ or if there is a collision, (I've removed the extra linefeeds below):
 (-0.2, 0.4, 0.1)"
 The contact information indicates where on the robot's "mask" there is a contact. In this case, there are 4 contacts.
  
-In response to an "image" request, the response, the robot returns a JPEG image as a series of bytes. The message format is as follows, with the code being an I instead of T, since we're not receiving text this time:
+In response to an "image" request, the robot returns a JPEG image as a series of bytes. The message format is as follows, with the code being an I (for Image) instead of T, since we're not receiving text this time:
      I<num bytes><image bytes>
-
-
-
+ 
