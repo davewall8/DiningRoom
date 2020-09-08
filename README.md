@@ -27,7 +27,6 @@ or if there is a collision, (I've removed the extra linefeeds):
 (0.2, 0.4, 0.1)
 (-0.2, 0.4, 0.1)"
 The contact information indicates where on the robot's "mask" there is a contact. In this case, there are 4 contacts.
- 
-In response to an "image" request, the robot returns a JPEG image as a series of bytes. The message format is as follows, with the code being an I (for Image) instead of T, since we're not receiving text this time:
-     I<num bytes><image bytes>
- 
+      
+For an "image" request, the robot returns a JPEG image as a series of bytes. The message format is an "I" (for Image) as I, num image bytes, jpg image bytes.
+
