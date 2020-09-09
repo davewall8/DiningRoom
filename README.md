@@ -6,7 +6,7 @@ This Unity 3d program simulates a simple robot that moves about in a dining room
 The keyboard commands are single-keys: f(orward), b(ackward), l(eft), r(ight), u(p), d(own), s(tart), which resets the camera back to its starting place.
 There are similar network-based commands, using a TCP/IP client socket to port 13000. The sole socket client has the same control, but can also request the current image and the current contact points. Collision information received by the client should be used back up, and prevent the robot from passing through walls and furniture.<br />
 # Client Requests
-In addition to the full names above (for keyboard requests), there are also: "image", "collisions", and "quit", which disconnects the client, allowing the server to wait for a new client.<br />
+In addition to the full names above (for keyboard requests), there are also: "image", "collisions", and "quit", the latter of which disconnects the client, allowing the server to wait for a new client.<br />
 
 # Client Request Format
 About the client protocol, each client command is the full english word. Eg., "forward". Messages from the client are always text oriented, so they consist of the character "T", followed by a 32-bit integer value representing the length of the ensuing string, and finally the string itself, without quotes or nulls or crs or lfs.<br>
@@ -20,7 +20,8 @@ Although text oriented, all messages are encoded in a binary format (a series of
 </ul><br />
       84, 0, 0, 0, 7, 102, 111, 114, 119, 97, 114, 100<br />
 <br />
-and this is the way all other client messages are encoded.<br />
+and this is the way all other client messages are encoded. They are: <br />
+forward, backward, left, right, up, down, start, quit, image, collisions <br />
 
 # Server Response Format
 Server responses are in a binary format, too.<br />
