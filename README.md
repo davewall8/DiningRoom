@@ -1,7 +1,7 @@
 # DiningRoom
 Train your image processing AI without having to actually build and maintain a robot.<br />
 
-This Unity 3d program simulates a simple robot that moves about in a dining room, responding to client commands. Its gaze can be raised or lowered. It can turn left or right, and move forward or backward. It returns what it sees, and any collision information, whenever requested. Note that the TCP/IP protocol described below is in binary (not text).<br />
+This Unity 3d program simulates a simple robot that moves about in a dining room, responding to client commands. Its gaze can be raised or lowered. It can turn left or right, and move forward or backward. It returns the image it "sees", or its current collision status, whenever requested. The robot responds to either keyboard keys or TCP/IP requests. Note that the TCP/IP protocol described below is in binary (not text).<br />
 
 The keyboard commands are single-keys: f(orward), b(ackward), l(eft), r(ight), u(p), d(own), s(tart), which resets the camera back to its starting place.
 There are similar network-based commands, using a TCP/IP client socket to port 13000. The sole socket client has the same control, but can also request the current image and the current contact points. Collision information received by the client should be used back up, and prevent the robot from passing through walls and furniture.<br />
@@ -9,11 +9,17 @@ There are similar network-based commands, using a TCP/IP client socket to port 1
 In addition to the full names above (for keyboard requests), there are also: "image", "collisions", and "quit", which disconnects the client, allowing the server to wait for a new client.<br />
 
 # Client Request Format
-About the client protocol, each client command is the full english word. Eg., "forward". Messages from the client are always text. They consist of the character T, followed by a 32-bit integer value representing the length of the ensuing string, and finally the string itself, without quotes or nulls or crs or lfs.<br>
-For example, to move forward on step, the word 'forward' has length 7 (seven characters):<br />
-      T<7>forward.<br />
-In binary (a series of bytes), where T is an ascii 84, and length 7 is 0,0,0,7 in big endian 32-bit format:<br />
-      84, 0, 0, 0, 7, 102, 111, 114, 119, 97, 114, 100 <br />
+About the client protocol, each client command is the full english word. Eg., "forward". Messages from the client are always text oriented, so they consist of the character "T", followed by a 32-bit integer value representing the length of the ensuing string, and finally the string itself, without quotes or nulls or crs or lfs.<br>
+For example, to move forward one step, the word "forward" has length 7 (seven characters):<br />
+      {T}{7}{forward}.<br />
+Although text oriented, all messages are encoded in a binary format (a series of bytes). Here 
+<ul>
+      <li>{T} is an ascii 84.</li>
+      <li>length {7} becomes {0,0,0,7} (big endian, 32-bit format).</li>
+      <li>{forward} as ascii values becomes {102, 111, 114, 119, 97, 114, 100}.</li>
+</ul><br />
+      84, 0, 0, 0, 7, 102, 111, 114, 119, 97, 114, 100<br />
+<br />
 and this is the way all other client messages are encoded.<br />
 
 # Server Response Format
